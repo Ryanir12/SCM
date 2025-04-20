@@ -1,0 +1,100 @@
+<?php 
+
+	$id= $_GET['id'];
+
+	$sql = $koneksi->query("select * from tb_supplier where id_supp='$id'");
+
+	$data= $sql->fetch_assoc();
+
+
+ ?>
+
+ <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="card">
+                      <div class="header">
+                          <h2>
+                              Ubah Supplier
+                          </h2>
+
+                      </div>
+                      <div class="body">
+                          <form method="post">
+
+                            <label for="kode">Kode Supplier</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="kode" id="kode" readonly="" value="<?php echo $data['id_supp'] ?>" class="form-control"  >
+                                </div>
+                            </div>
+
+
+                             <label for="kode">Nama Supplier</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="nama" id="kode" value="<?php echo $data['nama']; ?>"  class="form-control"  >
+                                </div>
+                            </div>
+
+
+                             <label for="kode">Alamat</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="alamat" id="kode" value="<?php echo $data['alamat']; ?>"   class="form-control"  >
+                                </div>
+                            </div>
+
+
+                             <label for="kode">Telpon</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="telpon" id="kode" value="<?php echo $data['telpon']; ?>"   class="form-control"  >
+                                </div>
+                            </div>
+
+
+                             <label for="kode">Email</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input type="text" name="email" id="kode" value="<?php echo $data['email']; ?>" class="form-control"  >
+                                </div>
+                            </div>
+
+
+
+                             <input type="submit" name="simpan" value="Simpan" class="btn btn-primary">
+			                <input type=button value=Kembali onclick=self.history.back() class="btn btn-info" />
+                        </form>
+
+
+
+<?php 
+
+	if (isset($_POST['simpan'])) {
+		
+		
+		$nama = $_POST['nama'];
+		$alamat = $_POST['alamat'];
+		$telpon = $_POST['telpon'];
+		$email = $_POST['email'];
+		
+
+
+		$simpan = $koneksi->query("update  tb_supplier set  nama='$nama', alamat='$alamat', telpon='$telpon', email='$email' where id_supp= '$id' ");
+      $Simpan = $koneksi->query("update tb_user set user_id='', nama='$nama', email='$email',  level='supplier',  foto='-' where id='$id'");
+
+
+		if ($simpan) {
+			 ?>
+              <script>
+                  alert("Data Barang Berhasil diubah ");
+                  window.location.href="?page=supplier";
+              </script>
+
+            <?php
+		}
+
+	}
+
+ ?>
+
